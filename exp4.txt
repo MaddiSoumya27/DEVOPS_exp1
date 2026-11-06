@@ -1,0 +1,44 @@
+sudo apt update
+sudo apt install fontconfig openjdk-21-jre -y
+java -version
+2. Install Jenkins
+Add Jenkins key
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+Add jenkins repistory
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update
+sudo apt install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+Unlock Jenkins
+Get the initial administrator password:
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+Pipelinescript
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+}
