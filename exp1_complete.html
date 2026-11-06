@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration</title>
+</head>
+<body>
+<h2>Event Registration</h2>
+<form id="form">
+    <input type="text" id="name" placeholder="Name" required><br><br>
+    <input type="email" id="email" placeholder="Email" required><br><br>
+    <input type="text" id="phone" placeholder="Phone" required><br><br>
+    <select id="event" required>
+        <option value="">Choose Event</option>
+        <option value="Hackathon">Hackathon</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Seminar">Seminar</option>
+    </select><br><br>
+    <button type="submit">Register</button>
+</form>
+<p id="message"></p>
+<script>
+document.getElementById("form").onsubmit = async function(e) {
+    e.preventDefault();
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        event: document.getElementById("event").value
+    };
+    const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    if (response.ok) {
+        document.getElementById("message").innerText =
+            "Registration Successful!";
+    }
+};
+</script>
+</body>
+</html>
+
+
+server.js
+const express = require("express");
+const sqlite3 = require("sqlite3").verbose();
+const cors = require("cors");
+const app = express();
+app.use(cors());
+app.use(express.json());
+// Connect to database
+const db = new sqlite3.Database("event.db");
+// Create table
+db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        email TEXT,
+        phone TEXT,
+        event TEXT
+    )
+`);
+// Register user
+app.post("/register", (req, res) => {
+    const { name, email, phone, event } = req.body;
+    db.run(
+        `INSERT INTO users (name, email, phone, event)
+         VALUES (?, ?, ?, ?)`,
+        [name, email, phone, event],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json({ message: "Registration Successful!" });
+        }
+    );
+});
+// Start server
+app.listen(5000, () => {
+    console.log("Server running on port 5000");
+});
+
+npm init -y
+npm install express sqlite3 cors
+node server.js
