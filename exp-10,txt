@@ -1,0 +1,24 @@
+java -version
+mvn -version 
+mkdir 24wh1a05by
+cd 24wh1a05by
+pwd
+
+mvn archetype:generate -DarchetypeGroupId=com.intuit.karate -DarchetypeArtifactId=karate-archetype 
+-DarchetypeVersion=1.4.1 -DgroupId=com.example -DartifactId=karate-demo 
+-DinteractiveMode=false
+ 
+cd karate-demo
+mvn test -Dtest=examples.users.UsersRunner
+xdg-open target/karate-demo/karate-summary.html
+
+
+springboot
+mkdir -p ~/springboot
+cd ~/Downloads
+
+unzip 24wh1a05by.zip -d ~/springboot
+cd ~/springboot/24wh1a05by
+chmod +x mvnw
+./mvnw -version
+./mvnw spring-boot:run
