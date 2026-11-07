@@ -21,3 +21,4 @@ public class Prac1Application {
         return "Hello  second ";
     }
 }
+mvn clean test

@@ -18,7 +18,5 @@ mkdir -p ~/springboot
 cd ~/Downloads
 
 unzip 24wh1a05by.zip -d ~/springboot
-cd ~/springboot/24wh1a05by
-chmod +x mvnw
-./mvnw -version
+
 ./mvnw spring-boot:run
