@@ -12,8 +12,8 @@ sudo apt update
 sudo apt install jenkins -y
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
-sudo systemctl start jenkins
-sudo systemctl enable jenkins
+sudo systemctl ststus jenkins
+
 
 Unlock Jenkins
 Get the initial administrator password:
